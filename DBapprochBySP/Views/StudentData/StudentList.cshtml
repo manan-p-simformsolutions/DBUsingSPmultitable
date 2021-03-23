@@ -1,0 +1,132 @@
+﻿@*@model IEnumerable<DBapprochBySP.Models.StudentList_Result>*/*@
+@{
+    ViewBag.Title = "StudentList";
+}
+@{ 
+    IEnumerable<DBapprochBySP.Models.StudentList_Result> Model = ViewBag.StudentList;
+}
+
+<h2>StudentList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@using (Html.BeginForm("StudentList", "StudentData"))
+{
+    <table class="table">
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                RollNo
+            </th>
+            <th>
+              Class
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+               City
+            </th>
+            <th>
+                Amount
+            </th>
+            <th>
+                Year
+            </th>
+
+            <th></th>
+        </tr>
+        @{ 
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RollNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Class)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id}) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id})
+                    </td>
+                </tr>
+               
+            }
+        }
+
+    </table>
+
+<table cellpadding="0" cellspacing="0">
+    <tr>
+        @* <td>
+                <a class="pages" href="javascript:Prev()">Prev</a>
+            </td>*@
+        @for (int i = 1; i <= ViewBag.PageCount; i++)
+        {
+            <td>
+                @if (i != ViewBag.CPage)
+                {
+                    <a class="pages" href="javascript:Goto(@i);">@i</a>
+                }
+                else
+                {
+                    <span class="pages">@i</span>
+                }
+            </td>
+        }
+        @*<td><a class="pages" href="javascript:Next();">Next</a></td>*@
+    </tr>
+</table>
+    <input type="hidden" id="curpageidx" name="cPage" />
+}
+<script type="text/javascript">
+    function Prev() {
+
+        var idx = document.getElementById("curpageidx").value;
+
+        if (idx - 1 > 0) {
+            alert(idx);
+            document.getElementById("curpageidx").a = idx - 1;
+            document.forms[0].submit();
+        }
+    }
+    function Goto(index) {
+        document.getElementById("curpageidx").value = index;
+        document.forms[0].submit();
+    }
+    function Next() {
+
+        var idx = document.getElementById("curpageidx").value;
+        alert(idx);
+        if (idx + 1 <=@ViewBag.PageCount) {
+            document.getElementById("curpageidx").value = idx - 1;
+        document.forms[0].submit();
+        }
+    }
+</script>

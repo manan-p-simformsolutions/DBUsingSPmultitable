@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="StudentModel1StoreContainer" CdmEntityContainer="StudentEntities1">
+    <EntitySetMapping Name="ScholarshipDatas">
+      <EntityTypeMapping TypeName="StudentModel1.ScholarshipData">
+        <MappingFragment StoreEntitySet="ScholarshipData">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudentDatas">
+      <EntityTypeMapping TypeName="StudentModel1.StudentData">
+        <MappingFragment StoreEntitySet="StudentData">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="RollNo" ColumnName="RollNo" />
+          <ScalarProperty Name="Class" ColumnName="Class" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="DeleteStudent" FunctionName="StudentModel1.Store.DeleteStudent" />
+    <FunctionImportMapping FunctionImportName="GetScholarship" FunctionName="StudentModel1.Store.GetScholarship">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="StudentModel1.GetScholarship_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="RollNo" ColumnName="RollNo" />
+          <ScalarProperty Name="Class" ColumnName="Class" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Id1" ColumnName="Id1" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsertScholarship" FunctionName="StudentModel1.Store.InsertScholarship" />
+    <FunctionImportMapping FunctionImportName="InsertStudent" FunctionName="StudentModel1.Store.InsertStudent" />
+    <FunctionImportMapping FunctionImportName="StudentList" FunctionName="StudentModel1.Store.StudentList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="StudentModel1.StudentList_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="RollNo" ColumnName="RollNo" />
+          <ScalarProperty Name="Class" ColumnName="Class" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="UpdateStudent" FunctionName="StudentModel1.Store.UpdateStudent" />
+  </EntityContainerMapping>
+</Mapping>

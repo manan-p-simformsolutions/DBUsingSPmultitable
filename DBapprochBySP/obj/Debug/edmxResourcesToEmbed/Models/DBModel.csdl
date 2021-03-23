@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StudentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ScholarshipData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentId" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Year" Type="Int32" />
+    <NavigationProperty Name="StudentData" Relationship="Self.FK_ScholarshipData_StudentData" FromRole="ScholarshipData" ToRole="StudentData" />
+  </EntityType>
+  <EntityType Name="StudentData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RollNo" Type="Int32" Nullable="false" />
+    <Property Name="Class" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ScholarshipDatas" Relationship="Self.FK_ScholarshipData_StudentData" FromRole="StudentData" ToRole="ScholarshipData" />
+  </EntityType>
+  <Association Name="FK_ScholarshipData_StudentData">
+    <End Role="StudentData" Type="Self.StudentData" Multiplicity="1" />
+    <End Role="ScholarshipData" Type="Self.ScholarshipData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StudentData">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ScholarshipData">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="StudentEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ScholarshipDatas" EntityType="Self.ScholarshipData" />
+    <EntitySet Name="StudentDatas" EntityType="Self.StudentData" />
+    <AssociationSet Name="FK_ScholarshipData_StudentData" Association="Self.FK_ScholarshipData_StudentData">
+      <End Role="StudentData" EntitySet="StudentDatas" />
+      <End Role="ScholarshipData" EntitySet="ScholarshipDatas" />
+    </AssociationSet>
+    <FunctionImport Name="InsertStudent" ReturnType="Collection(Decimal)">
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Rollno" Mode="In" Type="Int32" />
+      <Parameter Name="Class" Mode="In" Type="Int32" />
+      <Parameter Name="Address" Mode="In" Type="String" />
+      <Parameter Name="City" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="StudentList" ReturnType="Collection(StudentModel.StudentList_Result)" />
+    <FunctionImport Name="DeleteStudent">
+      <Parameter Name="ScholarshipId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="InsertScholarship" ReturnType="Collection(Decimal)">
+      <Parameter Name="StudentId" Mode="In" Type="Int32" />
+      <Parameter Name="Amount" Mode="In" Type="Decimal" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateStudent">
+      <Parameter Name="StudentId" Mode="In" Type="Int32" />
+      <Parameter Name="ScholarshipId" Mode="In" Type="Int32" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="RollNo" Mode="In" Type="Int32" />
+      <Parameter Name="Class" Mode="In" Type="Int32" />
+      <Parameter Name="City" Mode="In" Type="String" />
+      <Parameter Name="Address" Mode="In" Type="String" />
+      <Parameter Name="Amount" Mode="In" Type="Decimal" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="StudentList_Result">
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="RollNo" Nullable="false" />
+    <Property Type="String" Name="Class" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Address" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="City" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="Amount" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Int32" Name="Year" Nullable="true" />
+  </ComplexType>
+</Schema>

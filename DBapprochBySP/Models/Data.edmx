@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="StudentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ScholarshipData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Year" Type="int" />
+        </EntityType>
+        <EntityType Name="StudentData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RollNo" Type="int" Nullable="false" />
+          <Property Name="Class" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_ScholarshipData_StudentData">
+          <End Role="StudentData" Type="Self.StudentData" Multiplicity="1" />
+          <End Role="ScholarshipData" Type="Self.ScholarshipData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ScholarshipData">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="DeleteStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ScholarshipId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetScholarship" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StudentId" Type="int" Mode="In" />
+          <Parameter Name="ScholarshipId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertScholarship" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StudentId" Type="int" Mode="In" />
+          <Parameter Name="Amount" Type="decimal" Mode="In" />
+          <Parameter Name="Year" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="Rollno" Type="int" Mode="In" />
+          <Parameter Name="Class" Type="int" Mode="In" />
+          <Parameter Name="Address" Type="nvarchar" Mode="In" />
+          <Parameter Name="City" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Pagination" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PageNumber" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+        </Function>
+        <Function Name="StudentList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="UpdateStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StudentId" Type="int" Mode="In" />
+          <Parameter Name="ScholarshipId" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="RollNo" Type="int" Mode="In" />
+          <Parameter Name="Class" Type="int" Mode="In" />
+          <Parameter Name="City" Type="nvarchar" Mode="In" />
+          <Parameter Name="Address" Type="nvarchar" Mode="In" />
+          <Parameter Name="Amount" Type="decimal" Mode="In" />
+          <Parameter Name="Year" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="StudentModelStoreContainer">
+          <EntitySet Name="ScholarshipData" EntityType="Self.ScholarshipData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentData" EntityType="Self.StudentData" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ScholarshipData_StudentData" Association="Self.FK_ScholarshipData_StudentData">
+            <End Role="StudentData" EntitySet="StudentData" />
+            <End Role="ScholarshipData" EntitySet="ScholarshipData" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StudentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ScholarshipData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Year" Type="Int32" />
+          <NavigationProperty Name="StudentData" Relationship="Self.FK_ScholarshipData_StudentData" FromRole="ScholarshipData" ToRole="StudentData" />
+        </EntityType>
+        <EntityType Name="StudentData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RollNo" Type="Int32" Nullable="false" />
+          <Property Name="Class" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ScholarshipDatas" Relationship="Self.FK_ScholarshipData_StudentData" FromRole="StudentData" ToRole="ScholarshipData" />
+        </EntityType>
+        <Association Name="FK_ScholarshipData_StudentData">
+          <End Role="StudentData" Type="Self.StudentData" Multiplicity="1" />
+          <End Role="ScholarshipData" Type="Self.ScholarshipData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ScholarshipData">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StudentEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ScholarshipDatas" EntityType="Self.ScholarshipData" />
+          <EntitySet Name="StudentDatas" EntityType="Self.StudentData" />
+          <AssociationSet Name="FK_ScholarshipData_StudentData" Association="Self.FK_ScholarshipData_StudentData">
+            <End Role="StudentData" EntitySet="StudentDatas" />
+            <End Role="ScholarshipData" EntitySet="ScholarshipDatas" />
+          </AssociationSet>
+          <FunctionImport Name="DeleteStudent">
+            <Parameter Name="ScholarshipId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetScholarship" ReturnType="Collection(StudentModel.GetScholarship_Result)">
+            <Parameter Name="StudentId" Mode="In" Type="Int32" />
+            <Parameter Name="ScholarshipId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertScholarship" ReturnType="Collection(Decimal)">
+            <Parameter Name="StudentId" Mode="In" Type="Int32" />
+            <Parameter Name="Amount" Mode="In" Type="Decimal" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertStudent" ReturnType="Collection(Decimal)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Rollno" Mode="In" Type="Int32" />
+            <Parameter Name="Class" Mode="In" Type="Int32" />
+            <Parameter Name="Address" Mode="In" Type="String" />
+            <Parameter Name="City" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Pagination" ReturnType="Collection(StudentModel.Pagination_Result)">
+            <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="StudentList" ReturnType="Collection(StudentModel.StudentList_Result)" />
+          <FunctionImport Name="UpdateStudent">
+            <Parameter Name="StudentId" Mode="In" Type="Int32" />
+            <Parameter Name="ScholarshipId" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="RollNo" Mode="In" Type="Int32" />
+            <Parameter Name="Class" Mode="In" Type="Int32" />
+            <Parameter Name="City" Mode="In" Type="String" />
+            <Parameter Name="Address" Mode="In" Type="String" />
+            <Parameter Name="Amount" Mode="In" Type="Decimal" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetScholarship_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="RollNo" Nullable="false" />
+          <Property Type="String" Name="Class" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Id1" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="Year" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Pagination_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="RollNo" Nullable="false" />
+          <Property Type="String" Name="Class" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="StudentList_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="RollNo" Nullable="false" />
+          <Property Type="String" Name="Class" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="ScholarshipId" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="Amount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="Year" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StudentModelStoreContainer" CdmEntityContainer="StudentEntities2">
+          <EntitySetMapping Name="ScholarshipDatas">
+            <EntityTypeMapping TypeName="StudentModel.ScholarshipData">
+              <MappingFragment StoreEntitySet="ScholarshipData">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentDatas">
+            <EntityTypeMapping TypeName="StudentModel.StudentData">
+              <MappingFragment StoreEntitySet="StudentData">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="RollNo" ColumnName="RollNo" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DeleteStudent" FunctionName="StudentModel.Store.DeleteStudent" />
+          <FunctionImportMapping FunctionImportName="GetScholarship" FunctionName="StudentModel.Store.GetScholarship">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="StudentModel.GetScholarship_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="RollNo" ColumnName="RollNo" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Id1" ColumnName="Id1" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertScholarship" FunctionName="StudentModel.Store.InsertScholarship" />
+          <FunctionImportMapping FunctionImportName="InsertStudent" FunctionName="StudentModel.Store.InsertStudent" />
+          <FunctionImportMapping FunctionImportName="Pagination" FunctionName="StudentModel.Store.Pagination">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="StudentModel.Pagination_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="RollNo" ColumnName="RollNo" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="StudentList" FunctionName="StudentModel.Store.StudentList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="StudentModel.StudentList_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="RollNo" ColumnName="RollNo" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ScholarshipId" ColumnName="ScholarshipId" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateStudent" FunctionName="StudentModel.Store.UpdateStudent" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
